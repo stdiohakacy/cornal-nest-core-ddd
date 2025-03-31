@@ -4,7 +4,9 @@ import { ConfigService } from '@nestjs/config';
 import { Logger, VersioningType } from '@nestjs/common';
 import { Logger as PinoLogger } from 'nestjs-pino';
 import compression from 'compression';
-import { useContainer } from 'class-validator';
+import { useContainer, validate } from 'class-validator';
+import { plainToInstance } from 'class-transformer';
+import { ApplicationEnvDto } from './app/dtos/application.env.dto';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
@@ -42,6 +44,21 @@ async function bootstrap() {
     });
   }
 
-  await app.listen(3000);
+  // Validate env
+  const classEnv = plainToInstance(ApplicationEnvDto, process.env);
+
+  const errors = await validate(classEnv);
+
+  if (errors.length) {
+    throw new Error('Env Variable Invalid');
+  }
+
+  await app.listen(port, host);
+
+  logger.log(`Http versioning is ${versionEnable}`);
+  logger.log(`Http Server running on ${await app.getUrl()}`, 'NestApplication');
+  logger.log(`Database uri ${databaseUri}`);
+
+  return;
 }
 bootstrap();
