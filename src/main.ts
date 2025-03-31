@@ -36,6 +36,7 @@ async function bootstrap() {
   app.use(compression());
   app.setGlobalPrefix(globalPrefix);
   useContainer(app.select(AppModule), { fallbackOnErrors: true });
+
   if (versionEnable) {
     app.enableVersioning({
       type: VersioningType.URI,
