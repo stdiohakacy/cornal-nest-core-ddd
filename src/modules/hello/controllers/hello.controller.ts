@@ -1,6 +1,8 @@
 import { Controller, Get, VERSION_NEUTRAL } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { HelperDateService } from 'src/shared/helper/services/helper.date.service';
 
+@ApiTags('modules.public.hello')
 @Controller({
   version: VERSION_NEUTRAL,
   path: '/hello',

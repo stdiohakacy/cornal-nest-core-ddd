@@ -1,4 +1,5 @@
-import { NestFactory } from '@nestjs/core';
+import { NestApplication, NestFactory } from '@nestjs/core';
+import swaggerInit from 'src/swagger';
 import { AppModule } from './app/app.module';
 import { ConfigService } from '@nestjs/config';
 import { Logger, VersioningType } from '@nestjs/common';
@@ -9,7 +10,7 @@ import { plainToInstance } from 'class-transformer';
 import { ApplicationEnvDto } from './app/dtos/application.env.dto';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule, {
+  const app: NestApplication = await NestFactory.create(AppModule, {
     abortOnError: true,
     bufferLogs: false,
   });
@@ -44,6 +45,9 @@ async function bootstrap() {
       prefix: versioningPrefix,
     });
   }
+
+  // Swagger
+  await swaggerInit(app);
 
   // Validate env
   const classEnv = plainToInstance(ApplicationEnvDto, process.env);
