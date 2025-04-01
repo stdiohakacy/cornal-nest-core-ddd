@@ -22,15 +22,15 @@ import {
   MongoUpdateManyOptionsInterface,
 } from '../interfaces/mongo.interface';
 import { UpdateResult, DeleteResult, InsertManyResult } from 'mongodb';
-import { MongoOrmEntity } from './mongo.entity';
+import { BaseMongoOrmEntity } from './base.mongo.entity';
 import { MongoSoftDeleteDto } from '../dtos/mongo.soft-delete.dto';
-import { ENUM_PAGINATION_ORDER_DIRECTION_TYPE } from 'src/shared/pagination/enums/pagination.enum';
-import { MongoRepositoryInterface } from '../interfaces/mongo.repository.interface';
+import { BaseMongoRepositoryInterface } from '../interfaces/mongo.repository.interface';
+import { ENUM_PAGINATION_ORDER_DIRECTION_TYPE } from '../../../pagination/enums/pagination.enum';
 
-export class MongoRepository<
-  Entity extends MongoOrmEntity,
+export class BaseMongoRepository<
+  Entity extends BaseMongoOrmEntity,
   EntityDocument extends IMongoDocument<Entity>,
-> implements MongoRepositoryInterface<Entity, EntityDocument>
+> implements BaseMongoRepositoryInterface<Entity, EntityDocument>
 {
   protected readonly _repository: Model<Entity>;
   readonly _join?: PopulateOptions | (string | PopulateOptions)[];

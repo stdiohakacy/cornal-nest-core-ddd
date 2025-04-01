@@ -24,10 +24,10 @@ import {
 } from '../interfaces/mongo.interface';
 import { UpdateResult, DeleteResult, InsertManyResult } from 'mongodb';
 import { MongoSoftDeleteDto } from '../dtos/mongo.soft-delete.dto';
-import { MongoOrmEntity } from '../bases/mongo.entity';
+import { BaseMongoOrmEntity } from '../bases/base.mongo.entity';
 
-export interface MongoRepositoryInterface<
-  Entity extends MongoOrmEntity,
+export interface BaseMongoRepositoryInterface<
+  Entity extends BaseMongoOrmEntity,
   EntityDocument extends IMongoDocument<Entity>,
 > {
   // Basic Find

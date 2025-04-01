@@ -1,7 +1,7 @@
 import { v4 as uuidV4 } from 'uuid';
 import { MongoProp } from '../decorators/mongo.decorator';
 
-export class MongoOrmEntity {
+export class BaseMongoOrmEntity {
   @MongoProp({
     type: String,
     default: uuidV4,
