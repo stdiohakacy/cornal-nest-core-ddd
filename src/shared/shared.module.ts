@@ -11,6 +11,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { MONGO_CONNECTION_NAME } from './databases/mongo/constants/mongo.constant';
 import { MongoOptionModule } from './databases/mongo/mongo.options.module';
 import { MongoOptionService } from './databases/mongo/services/mongo.options.service';
+import { RequestModule } from './request/request.module';
 
 @Module({
   imports: [
@@ -22,7 +23,9 @@ import { MongoOptionService } from './databases/mongo/services/mongo.options.ser
       expandVariables: false,
     }),
     PaginationModule,
+    RequestModule.forRoot(),
     MongoModule.forRoot(),
+    HelperModule.forRoot(),
     MongooseModule.forRootAsync({
       connectionName: MONGO_CONNECTION_NAME,
       imports: [MongoOptionModule],
@@ -30,7 +33,6 @@ import { MongoOptionService } from './databases/mongo/services/mongo.options.ser
       useFactory: async (mongoOptionService: MongoOptionService) =>
         mongoOptionService.createOptions(),
     }),
-    HelperModule.forRoot(),
     PinoLoggerModule.forRootAsync({
       imports: [LoggerOptionModule],
       inject: [LoggerOptionService],
